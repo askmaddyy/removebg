@@ -1,0 +1,42 @@
+.obsidian-text-stream { min-width: 0; }
+
+/* Highlighter pass over the called-out word. The bar is drawn behind the text
+   and sweeps in while the stream is held, so it reads as a marker stroke rather
+   than a static background. */
+.obsidian-text-stream__mark { position: relative; font-weight: 600; }
+/* The marker is yellow in both themes, so the word stays dark in both — the
+   inherited light text of dark mode is unreadable on it. */
+.obsidian-text-stream__mark > span { position: relative; z-index: 1; color: #141414; }
+.obsidian-text-stream__mark::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 16%;
+  bottom: 14%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--ts-marker, #ffd84d);
+  transform: rotate(-0.6deg);
+  transition: width 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.obsidian-text-stream__mark.is-on::before { width: calc(100% - 4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .obsidian-text-stream__mark::before { transition: none; width: calc(100% - 4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .obsidian-text-stream .obsidian-text-stream__viewport {
+    display: flex;
+    align-items: center;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .obsidian-text-stream .obsidian-text-stream__track {
+    position: relative !important;
+    transform: none !important;
+  }
+
+  .obsidian-text-stream__copy + .obsidian-text-stream__copy { display: none !important; }
+}

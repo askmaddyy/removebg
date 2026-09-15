@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local agent / editor config
+.claude/
+
+# throwaway model comparison output
+/tmp-compare/

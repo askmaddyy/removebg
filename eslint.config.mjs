@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored copy-you-own components pulled from external registries. They're
+    // upstream code, not ours to restyle — linting them is pure noise.
+    "components/DomeGallery.tsx",
+    "components/LiquidEther.tsx",
+    "components/MorphSlider.tsx",
+    "components/block/**",
+    "lib/effects/**",
   ]),
 ]);
 

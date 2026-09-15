@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---- Light (default) ---------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #fbfbf9;
+  --bg-lit: #ffffff;
+  --stage: #f2f2ee;
+
+  --surface: rgba(0, 0, 0, 0.025);
+  --surface-2: rgba(0, 0, 0, 0.055);
+  --edge: rgba(0, 0, 0, 0.09);
+  --edge-bright: rgba(0, 0, 0, 0.2);
+
+  --text: #16171a;
+  --text-2: #5c5f66;
+  --text-3: #8b8e95;
+
+  --ink: #16171a; /* primary action fill */
+  --on-ink: #fbfbf9; /* text on primary action */
+
+  --live: #1a7f52;
+  --warn: #9a5a12;
+  --err: #a63a2c;
+
+  --check-a: #e8e8e2;
+  --check-b: #f4f4f0;
+
+  --grain: 0.03;
+  --lift: 0 20px 60px -30px rgba(0, 0, 0, 0.3);
+  --inset-hi: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ---- Dark --------------------------------------------------------------- */
+.dark {
+  --bg: #0b0c0f;
+  --bg-lit: #101217;
+  --stage: #08090c;
+
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.075);
+  --edge: rgba(255, 255, 255, 0.085);
+  --edge-bright: rgba(255, 255, 255, 0.18);
+
+  --text: #f4f3f0;
+  --text-2: #9ea1a8;
+  --text-3: #62656d;
+
+  --ink: #f4f3f0;
+  --on-ink: #0b0c0f;
+
+  --live: #5fd39b;
+  --warn: #e8a765;
+  --err: #e8776b;
+
+  --check-a: #171a20;
+  --check-b: #1e2129;
+
+  --grain: 0.04;
+  --lift: 0 28px 70px -34px rgba(0, 0, 0, 0.95);
+  --inset-hi: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-lit: var(--bg-lit);
+  --color-stage: var(--stage);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-edge: var(--edge);
+  --color-edge-bright: var(--edge-bright);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-live: var(--live);
+  --color-warn: var(--warn);
+  --color-err: var(--err);
+
+  --font-sans: var(--font-grotesk);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--edge);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient light from the top-left, tuned per theme. */
+.ambient {
+  background:
+    radial-gradient(1100px 680px at 8% -14%, rgba(0, 0, 0, 0.045), transparent 62%),
+    var(--bg);
+}
+.dark .ambient {
+  background:
+    radial-gradient(1100px 680px at 8% -14%, rgba(255, 255, 255, 0.075), transparent 62%),
+    radial-gradient(900px 600px at 96% 10%, rgba(180, 200, 255, 0.035), transparent 60%),
+    linear-gradient(180deg, #101217 0%, #0b0c0f 55%, #08090c 100%);
+}
+
+/* The checkerboard is the brand material. */
+.checker {
+  background-image:
+    linear-gradient(45deg, var(--check-a) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--check-a) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--check-a) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--check-a) 75%);
+  background-size: var(--check-size, 22px) var(--check-size, 22px);
+  background-position:
+    0 0,
+    0 calc(var(--check-size, 22px) / 2),
+    calc(var(--check-size, 22px) / 2) calc(var(--check-size, 22px) / -2),
+    calc(var(--check-size, 22px) / -2) 0;
+  background-color: var(--check-b);
+}
+
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--edge);
+  box-shadow: var(--inset-hi), var(--lift);
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grain);
+  mix-blend-mode: overlay;
+}
+
+/* Sliders inside the editor panels. */
+input[type="range"].rail {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  outline: none;
+}
+input[type="range"].rail::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: grab;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+input[type="range"].rail::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: grab;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+/* Hide scrollbars on horizontal rails without losing the scroll. */
+.no-bar {
+  scrollbar-width: none;
+}
+.no-bar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
