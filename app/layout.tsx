@@ -36,6 +36,14 @@ export const metadata: Metadata = {
     url: "https://removebg.fyi",
     siteName: "removebg.fyi",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "removebg.fyi" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "removebg.fyi",
+    description:
+      "Remove the background from anything, in your browser. Free, full resolution, nothing uploaded.",
+    images: ["/og.png"],
   },
 };
 
