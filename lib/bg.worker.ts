@@ -36,6 +36,53 @@ function post(msg: Record<string, unknown>) {
   (self as unknown as DedicatedWorkerGlobalScope).postMessage(msg);
 }
 
+type FileProgress = { status: string; file?: string; loaded?: number; total?: number; progress?: number };
+
+/**
+ * Turns per-file download events into one honest overall percentage.
+ *
+ * Transformers.js reports progress PER FILE, and this model is several: a tiny
+ * config that finishes instantly, then the ONNX weights. Forwarding each file's
+ * own percentage made the bar reach 100%, then restart from 0 when the big file
+ * began. Two rules fix it:
+ *
+ *   - weight by bytes, so the weights file dominates as it actually does
+ *   - never move backwards, so a newly-announced file can't rewind the bar
+ */
+function createProgressTracker(onProgress: (pct: number) => void) {
+  const files = new Map<string, { loaded: number; total: number }>();
+  let high = 0;
+
+  return (p: FileProgress) => {
+    if (!p.file) return;
+    if (p.status === "done") {
+      const known = files.get(p.file);
+      if (known) files.set(p.file, { loaded: known.total, total: known.total });
+    } else if (typeof p.total === "number" && p.total > 0) {
+      files.set(p.file, { loaded: p.loaded ?? 0, total: p.total });
+    }
+
+    let loaded = 0;
+    let total = 0;
+    for (const f of files.values()) {
+      loaded += f.loaded;
+      total += f.total;
+    }
+    if (total <= 0) return;
+
+    // Hold back until the weights file is announced. Before that the only known
+    // file is a few KB of config, which would otherwise read as "nearly done".
+    const seenWeights = [...files.keys()].some((f) => f.endsWith(".onnx"));
+    const pct = (loaded / total) * 100;
+    const next = seenWeights ? pct : Math.min(pct, 5);
+
+    if (next > high) {
+      high = next;
+      onProgress(high);
+    }
+  };
+}
+
 async function load(): Promise<Loaded> {
   const devices: Array<"webgpu" | "wasm"> = [];
   if ("gpu" in navigator) devices.push("webgpu");
@@ -49,17 +96,15 @@ async function load(): Promise<Loaded> {
       if (device === "wasm" && env.backends?.onnx?.wasm) {
         env.backends.onnx.wasm.numThreads = 1;
       }
+      // Fresh tracker per attempt, so a device fallback restarts cleanly.
+      const track = createProgressTracker((progress) => post({ type: "load", progress }));
       const [model, processor] = await Promise.all([
         AutoModel.from_pretrained(MODEL_ID, {
           device,
           dtype: preferredDtype,
-          progress_callback: (p: { status: string; progress?: number }) => {
-            if (p.status === "progress" && typeof p.progress === "number") {
-              post({ type: "load", progress: p.progress });
-            }
-          },
+          progress_callback: track,
         }),
-        AutoProcessor.from_pretrained(MODEL_ID, {}),
+        AutoProcessor.from_pretrained(MODEL_ID, { progress_callback: track }),
       ]);
       post({ type: "ready", device: `${device}/${preferredDtype}` });
       return { model, processor, device, dtype: preferredDtype };
