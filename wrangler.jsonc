@@ -1,0 +1,13 @@
+{
+  // Static-only Worker: no `main` entry, so Cloudflare just serves the
+  // exported site. `npm run build` writes ./out (Next `output: "export"`).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "removebg",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./out",
+    // Static export already emits 404.html; let Cloudflare serve it directly
+    // rather than rewriting unknown paths to index.html.
+    "not_found_handling": "404-page"
+  }
+}
