@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     "open source background remover",
   ],
   alternates: { canonical: "/" },
+  // Bing Webmaster Tools ownership. Must stay put: removing it un-verifies us.
+  verification: { other: { "msvalidate.01": "746C53CE706A308280E43F6F4D86D7F4" } },
   robots: {
     index: true,
     follow: true,
