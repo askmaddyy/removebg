@@ -19,7 +19,7 @@ const useHydrated = () =>
  */
 export function Wordmark({ className = "h-16" }: { className?: string }) {
   return (
-    <Link href="/" aria-label="removebg.fyi — home" className="flex shrink-0 items-center">
+    <Link href="/" aria-label="removebg.fyi home" className="flex shrink-0 items-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/logo-light.png" alt="removebg.fyi" className={`${className} w-auto dark:hidden`} />
       {/* eslint-disable-next-line @next/next/no-img-element */}

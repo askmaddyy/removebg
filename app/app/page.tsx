@@ -572,7 +572,7 @@ function Dropzone({
             />
           </div>
           <p className="mono mt-2 text-[10.5px] text-text-3">
-            you can drop an image now — it runs the moment this finishes
+            you can drop an image now, it runs the moment this finishes
           </p>
         </div>
       )}

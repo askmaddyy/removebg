@@ -24,7 +24,7 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://removebg.fyi"),
-  title: "removebg.fyi — remove the background, keep everything else",
+  title: "removebg.fyi: free background remover, runs in your browser",
   description:
     "Free background remover that runs entirely in your browser. Portraits, products, cars, pets, logos. Full resolution, no account, no watermark, nothing uploaded.",
   applicationName: "removebg.fyi",

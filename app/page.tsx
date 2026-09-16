@@ -77,7 +77,7 @@ export default function Landing() {
         </h1>
 
         <p className="mx-auto mt-6 max-w-[54ch] text-[15px] leading-relaxed text-text-2 sm:text-[17px]">
-          A matting model runs on your own GPU — so nothing is uploaded, and full resolution
+          A matting model runs on your own GPU, so nothing is uploaded and full resolution
           costs nothing. Drop a photo and watch it cut in under a second.
         </p>
 
@@ -106,7 +106,7 @@ export default function Landing() {
             className="group inline-flex items-center gap-2 text-[13.5px] text-text-2 transition-colors hover:text-text"
           >
             <span className="size-[5px] rounded-full bg-warn" />
-            remove.bg closes 1 Dec 2026 — what to use instead
+            remove.bg closes 1 Dec 2026. What to use instead
             <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
           </Link>
         </div>

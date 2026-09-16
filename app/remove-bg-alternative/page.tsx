@@ -4,12 +4,12 @@ import { Header } from "@/components/chrome";
 import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
-  title: "remove.bg is shutting down on 1 December 2026 — what to use instead",
+  title: "remove.bg alternative: free, unlimited, runs in your browser",
   description:
-    "remove.bg closes its standalone site on 1 December 2026 and moves into Canva; the API moves to Leonardo.Ai. Here are the alternatives, including a free open-source one that runs in your browser.",
+    "remove.bg closes its standalone site on 1 December 2026. removebg.fyi is a free, open-source replacement: unlimited cuts at full resolution, no account, no watermark, and nothing ever uploaded.",
   alternates: { canonical: "/remove-bg-alternative" },
   openGraph: {
-    title: "remove.bg is shutting down — what to use instead",
+    title: "The free remove.bg alternative",
     description:
       "The standalone site closes 1 December 2026. A plain comparison of where to go next, API included.",
     url: "https://removebg.fyi/remove-bg-alternative",
@@ -29,7 +29,7 @@ const FACTS = [
 const FAQ: { q: string; a: string }[] = [
   {
     q: "Is remove.bg really shutting down?",
-    a: "The standalone remove.bg website is being discontinued on 1 December 2026 at 09:00 CET. The background removal itself is not disappearing — it is being folded into Canva, which has owned remove.bg since 2021. What goes away is the separate site you visit, and the separate account and credits attached to it.",
+    a: "The standalone remove.bg website is being discontinued on 1 December 2026 at 09:00 CET. The background removal itself is not disappearing, it is being folded into Canva, which has owned remove.bg since 2021. What goes away is the separate site you visit, and the separate account and credits attached to it.",
   },
   {
     q: "What happens to my unused remove.bg credits?",
@@ -73,7 +73,7 @@ const ROWS = [
     name: "Leonardo.Ai",
     price: "Paid, per call",
     where: "Their servers",
-    api: "Yes — the official API path",
+    api: "Yes, the official API path",
     best: "You had a remove.bg API integration",
   },
   {
@@ -117,8 +117,8 @@ export default function RemoveBgAlternative() {
           On <strong className="font-medium text-text">1 December 2026</strong> the standalone
           remove.bg site closes and its background removal moves into Canva, which has owned it
           since 2021. Unused credits expire the same morning, and the API moves to Leonardo.Ai.
-          If you used remove.bg for the simple thing — drop an image in, get a transparent PNG
-          out — this page is about what to use instead.
+          If you used remove.bg for the simple thing, drop an image in and get a transparent
+          PNG out, this page is about what to use instead.
         </p>
 
         <dl className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-edge bg-edge sm:grid-cols-2">
@@ -134,8 +134,7 @@ export default function RemoveBgAlternative() {
           The options, plainly
         </h2>
         <p className="mt-4 text-[16px] leading-relaxed text-text-2">
-          We build one of these, so read the table with that in mind. It is laid out to show
-          where each one actually fits, including the two columns where we are the wrong answer.
+          We build one of these, so read the table with that in mind.
         </p>
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-edge">
@@ -175,14 +174,12 @@ export default function RemoveBgAlternative() {
         </h2>
         <p className="mt-4 text-[16px] leading-relaxed text-text-2">
           That is what this site does. A matting model downloads to your browser once, then every
-          cut runs on your own hardware — no account, no watermark, no credits, no upload. Because
+          cut runs on your own hardware. No account, no watermark, no credits, no upload. Because
           nothing is metered, there is no reason to limit resolution, so you get the full-size
           file. The code is MIT-licensed and on GitHub.
         </p>
         <p className="mt-4 text-[16px] leading-relaxed text-text-2">
-          The honest limits: there is no API and no batch queue, the first run downloads a model
-          before anything happens, and a very old phone will be slow. If those matter, one of the
-          other three rows is the better answer.
+          There is no hosted API, so if you were calling remove.bg from code, see below.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -209,12 +206,11 @@ export default function RemoveBgAlternative() {
           If you were calling the API
         </h2>
         <p className="mt-4 text-[16px] leading-relaxed text-text-2">
-          Leonardo.Ai is the supported migration and the one to plan for — we do not offer a
-          hosted API and pretending otherwise would waste your time. If you would rather not
-          depend on a vendor at all, <code className="mono rounded bg-surface-2 px-1.5 py-0.5 text-[13px]">rembg</code>{" "}
+          Leonardo.Ai is the official migration path for the remove.bg API. If you would rather
+          not depend on a vendor,{" "}
+          <code className="mono rounded bg-surface-2 px-1.5 py-0.5 text-[13px]">rembg</code>{" "}
           self-hosts the same class of model, and this site&apos;s source shows how to run one
-          client-side if you want the work to happen in your users&apos; browsers instead of on
-          your bill.
+          client-side so the work happens in your users&apos; browsers instead of on your bill.
         </p>
 
         <h2 className="mt-16 text-[clamp(1.5rem,3.5vw,2.1rem)] font-medium tracking-[-0.03em]">
@@ -234,7 +230,7 @@ export default function RemoveBgAlternative() {
         <p className="mt-12 text-[13px] leading-relaxed text-text-3">
           Shutdown dates are as announced by remove.bg and reported in September 2026. We are not
           affiliated with remove.bg, Canva or Leonardo.Ai. If the dates move, this page is wrong
-          until we fix it — check their FAQ for the current position.
+          until we fix it. Check their FAQ for the current position.
         </p>
       </article>
 
