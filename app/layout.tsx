@@ -27,6 +27,24 @@ export const metadata: Metadata = {
   title: "removebg.fyi — remove the background, keep everything else",
   description:
     "Free background remover that runs entirely in your browser. Portraits, products, cars, pets, logos. Full resolution, no account, no watermark, nothing uploaded.",
+  applicationName: "removebg.fyi",
+  keywords: [
+    "background remover",
+    "remove background from image",
+    "free background remover",
+    "transparent PNG",
+    "remove.bg alternative",
+    "offline background removal",
+    "open source background remover",
+  ],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  authors: [{ name: "AskMaddyy", url: "https://askmaddyy.com" }],
+  creator: "AskMaddyy",
   // Icons come from app/icon.png and app/apple-icon.png via Next's file
   // convention — no metadata entry needed, and it beats a public/ path.
   openGraph: {
@@ -54,6 +72,22 @@ export const viewport: Viewport = {
   ],
 };
 
+/** Marks the site as a free web application rather than an article. */
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "removebg.fyi",
+  url: "https://removebg.fyi",
+  applicationCategory: "MultimediaApplication",
+  operatingSystem: "Any browser with WebGPU or WebAssembly",
+  description:
+    "Free, open-source background remover. The matting model runs in the browser, so images are never uploaded.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  isAccessibleForFree: true,
+  author: { "@type": "Person", name: "AskMaddyy", url: "https://askmaddyy.com" },
+  softwareHelp: "https://github.com/askmaddyy/removebg",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -61,6 +95,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${grotesk.variable} ${serif.variable} ${mono.variable} h-full`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      </head>
       <body className="min-h-full">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
