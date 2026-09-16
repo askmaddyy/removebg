@@ -99,6 +99,17 @@ export default function Landing() {
             Open the editor
           </Link>
         </div>
+
+        <div className="mt-6 flex justify-center">
+          <Link
+            href="/remove-bg-alternative"
+            className="group inline-flex items-center gap-2 text-[13.5px] text-text-2 transition-colors hover:text-text"
+          >
+            <span className="size-[5px] rounded-full bg-warn" />
+            remove.bg closes 1 Dec 2026 — what to use instead
+            <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
+          </Link>
+        </div>
         <p className="mono mt-4 text-[11px] text-text-3">drop or paste anywhere on this page</p>
       </section>
 

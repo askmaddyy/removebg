@@ -87,6 +87,9 @@ export function SiteFooter() {
             <a href="/app" className="text-[13px] text-text-2 transition-colors hover:text-text">
               Editor
             </a>
+            <a href="/remove-bg-alternative" className="text-[13px] text-text-2 transition-colors hover:text-text">
+              remove.bg alternative
+            </a>
           </div>
         </div>
       </div>
